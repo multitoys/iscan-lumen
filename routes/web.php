@@ -11,6 +11,24 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/', 'MainController@index');
+$router->get('order', [
+    'as'   => 'order.index',
+    'uses' => 'OrderController@index',
+]);
+$router->get('order/create', [
+    'as'   => 'order.create',
+    'uses' => 'OrderController@create',
+]);
+$router->get('order/{id}/edit', [
+    'as'   => 'order.edit',
+    'uses' => 'OrderController@edit',
+]);
+$router->put('order/{id}/update', [
+    'as'   => 'order.update',
+    'uses' => 'OrderController@update',
+]);
+$router->get('client/search', [
+    'as'   => 'client.search',
+    'uses' => 'ClientController@searchClients',
+]);
