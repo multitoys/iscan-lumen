@@ -28,6 +28,14 @@ $router->put('order/{id}/update', [
     'as'   => 'order.update',
     'uses' => 'OrderController@update',
 ]);
+$router->get('order/download/{order}/{file}', [
+    'as'   => 'order.download_file',
+    'uses' => 'OrderController@downloadFile',
+]);
+$router->delete('order/delete/{order}/{file}', [
+    'as'   => 'order.delete_file',
+    'uses' => 'OrderController@deleteFile',
+]);
 $router->get('client/search', [
     'as'   => 'client.search',
     'uses' => 'ClientController@searchClients',

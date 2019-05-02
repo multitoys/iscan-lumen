@@ -138,7 +138,7 @@
                     <tr>
                     @break
             @endswitch
-            <td>{{ $order->id }}&nbsp;<a class="" href="{{ route('order.edit', ['order' => $order->id]) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+            <td>{{ $order->id }}&nbsp;<a class="" href="{{ route('order.edit', ['id' => $order->id]) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
             <td>{{ $order->client->name ?? '' }}</td>
             <td>{{ $order->service->name ?? '' }}</td>
             <td>{{ $order->comment }}</td>

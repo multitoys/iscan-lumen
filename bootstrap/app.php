@@ -76,9 +76,12 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+ $app->register(App\Providers\AppServiceProvider::class);
  $app->register(App\Providers\AuthServiceProvider::class);
+ $app->register(Multitoys\LetsAds\LetsAdsServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+ 
+ $app->configure('app');
 
 /*
 |--------------------------------------------------------------------------

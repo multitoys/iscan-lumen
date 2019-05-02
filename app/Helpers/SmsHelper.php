@@ -4,7 +4,7 @@
 
     use App\Models\Order;
     use App\Models\Sms;
-    use Multitoys\LetsAds\LetsAds;
+    use Multitoys\LetsAds\LetsAdsFacade as LetsAds;
 
     class SmsHelper
     {
@@ -21,6 +21,7 @@
                     case 'MESSAGE_NOT_DELIVERED':
                         $sms_status = 'не доставлено';
                         break;
+                        
                     case 'MESSAGE_IN_QUEUE':
                         $sms_status = 'поставлено в очередь на отправку';
                         break;

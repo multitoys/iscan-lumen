@@ -11,6 +11,7 @@ use App\Models\Service;
 use App\Models\Status;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use LetsAds;
 
@@ -57,10 +58,10 @@ class OrderController extends Controller
     public function create()
     {
         $order = new Order();
-        $order->user_id = auth()->id();
+        $order->user_id = Auth::id();
         $order->save();
 
-        return redirect(route('order.edit', ['order' => $order->id]));
+        return redirect(route('order.edit', ['id' => $order->id]));
     }
 
     /**
@@ -80,7 +81,7 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
         //
     }
@@ -112,8 +113,10 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
+        $order = Order::findOrFail($id);
+        
         if (is_array($request->file('files')) && count($request->file('files'))) {
             foreach ($request->file('files') as $file) {
                 $file_name = $file->getClientOriginalName();
@@ -135,7 +138,7 @@ class OrderController extends Controller
         $order->prepayment   = $request->prepayment;
         $order->price_design = $request->price_design;
         $order->comment      = $request->comment;
-        $order->date_end     = \Carbon::parse($request->date_end);
+        $order->date_end     = \Carbon\Carbon::parse($request->date_end);
 
         if ($request->filled('client_id')) {
             $order->client_id = $request->client_id;
@@ -164,7 +167,7 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
         //
     }
@@ -188,10 +191,11 @@ class OrderController extends Controller
         return back()->withErrors(['error_message' => __('navigations.document_not_found')]);
     }
 
-    public function deleteFile(Order $order, $file_name)
+    public function deleteFile($order, $file_name)
     {
-        $path = Order::FILES_DIR.'/'.$order->id;
-        $file = $path.'/'.$file_name;
+        $order = Order::findOrFail($order);
+        $path  = Order::FILES_DIR.'/'.$order->id;
+        $file  = $path.'/'.$file_name;
 
         $status = false;
         if (Storage::exists($file)) {

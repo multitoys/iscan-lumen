@@ -139,11 +139,10 @@
 <body>
 <div class="container-fluid">
     <a href="{{ route('order.index') }}">На главную</a>
-    <form action="{{ route('order.update', ['order' => $order->id]) }}" method="post"
+    <form action="{{ route('order.update', ['id' => $order->id]) }}" method="post"
           enctype="multipart/form-data"
           onsubmit="return (ValidPhone() && ValidClient() && ValidOperator() && ValidInputNumber() && ValidDate())">
-{{--        {{ csrf_field() }}--}}
-{{--        {{ method_field('PUT') }}--}}
+        <input type="hidden" name="_method" value="PUT">
         <div class="row">
             <div class="col-xs-2">НОМЕР ЗАКАЗА</div>
             <div class="col-xs-1"><b class="order-id">{{ $order->id }}</b></div>
